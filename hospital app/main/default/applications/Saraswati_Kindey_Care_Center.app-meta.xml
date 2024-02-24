@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomApplication xmlns="http://soap.sforce.com/2006/04/metadata">
+    <brand>
+        <headerColor>#0070D2</headerColor>
+        <logo>X371024x6821</logo>
+        <logoVersion>1</logoVersion>
+        <shouldOverrideOrgTheme>false</shouldOverrideOrgTheme>
+    </brand>
+    <description>Harmony in Health: Nurturing Kidney Wellness</description>
+    <formFactors>Small</formFactors>
+    <formFactors>Large</formFactors>
+    <isNavAutoTempTabsDisabled>false</isNavAutoTempTabsDisabled>
+    <isNavPersonalizationDisabled>false</isNavPersonalizationDisabled>
+    <isNavTabPersistenceDisabled>false</isNavTabPersistenceDisabled>
+    <label>Saraswati Kindey Care Center</label>
+    <navType>Standard</navType>
+    <tabs>New_Patient__c</tabs>
+    <tabs>Ref_By__c</tabs>
+    <tabs>Consultant__c</tabs>
+    <tabs>Patient_Follow_Up__c</tabs>
+    <uiType>Lightning</uiType>
+    <utilityBar>Saraswati_Kindey_Care_Center_UtilityBar</utilityBar>
+</CustomApplication>

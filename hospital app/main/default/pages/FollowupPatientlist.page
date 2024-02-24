@@ -1,0 +1,30 @@
+<apex:page controller="PatientSearchExtension" >
+    <apex:form >
+        <apex:pageBlock title="Patients">
+            <apex:pageBlockSection >
+                <apex:inputText value="{!searchKeyword}" label="Patient ID/Name" />
+                <apex:commandButton value="Search" action="{!searchPatients}" rerender="searchResultsPanel" />
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+
+        <apex:pageBlock id="searchResultsPanel">
+            <apex:pageBlockTable value="{!searchResults}" var="patient">
+                <apex:column value="{!patient.Name}" rendered="{!showHeader}"/>
+                <apex:column headerValue="Patient Name" rendered="{!showHeader}">
+                    <apex:outputLink value="/{!patient.Id}">
+                        {!patient.Patient_Name__c}
+                    </apex:outputLink>
+                </apex:column>
+                <apex:column value="{!patient.Sex__c}" rendered="{!showHeader}"/>
+                <apex:column value="{!patient.Date__c}" rendered="{!showHeader}"/>
+                <apex:column value="{!patient.Email_ID__c}" rendered="{!showHeader}"/>
+                <apex:column value="{!patient.Mobile_No__c}" rendered="{!showHeader}"/>
+              <apex:column headerValue="Follow Up">
+                <apex:outputLink value="/apex/PatientFollowUpsPage">
+                    Follow Up
+                </apex:outputLink>
+            </apex:column>
+            </apex:pageBlockTable>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>
