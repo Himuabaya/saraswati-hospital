@@ -1,0 +1,49 @@
+<template>
+    <lightning-card title="Patients">
+        <div class="slds-p-around_medium">
+            <lightning-input
+                type="text"
+                label="Patients ID/NAME"
+                value={searchTerm}
+                onchange={handleSearchTermChange}
+            ></lightning-input>
+          <lightning-button label="Search"></lightning-button><!--handleserach method need to create-->
+        </div>
+        <div class="slds-p-around_medium">
+            <table class="slds-table slds-table_bordered slds-table_cell-buffer">
+                <thead>
+                    <tr>
+                        <th scope="col">Patient ID</th>
+                        <th scope="col">Patient Name</th>
+                        <th scope="col">Sex</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Email ID</th>
+                        <th scope="col">Mobile</th>
+                        <th scope="col">Follow Up</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <template for:each={patients} for:item="patient">
+                        <tr key={patient.Name}>
+                            <td>{patient.Name}</td>
+                            <td>
+                                <a href={patient.patientNameUrl}  rel="noopener noreferrer">
+                                    {patient.patientName}
+                                </a>
+                            </td>
+                            <td>{patient.Sex__c}</td>
+                            <td>{patient.Date__c}</td> 
+                            <td>{patient.Email_ID__c}</td>
+                            <td>{patient.Mobile_No__c}</td>
+                            <td>
+                                    <a href={patient.followUpUrl.url} rel="noopener noreferrer">
+                                        {patient.followUpUrl.label}
+                                    </a>
+                            </td>
+                        </tr>
+                    </template>
+                </tbody>
+            </table>
+        </div>
+    </lightning-card>
+</template>
