@@ -37,12 +37,17 @@ export default class PatientListLWC extends LightningElement {
 
     mapDataForDisplay(data) {
         return data.map(patient => {
+                const formattedDate = new Date(patient.Date__c).toLocaleDateString('en-GB', {
+                    day: '2-digit',
+                    month: '2-digit',
+                    year: 'numeric',
+                });
             return {
                 Name: patient.Name,
                 patientName: patient.Patient_Name__c,
                 patientNameUrl: this.getPatientDetailsUrl(patient.Id),
                 Sex__c: patient.Sex__c,
-                Date__c: patient.Date__c,
+                Date__c: formattedDate,
                 Email_ID__c: patient.Email_ID__c,
                 Mobile_No__c: patient.Mobile_No__c,
                 followUpUrl: this.getFollowUpUrl(patient.Id)
@@ -54,11 +59,6 @@ export default class PatientListLWC extends LightningElement {
      return `/lightning/r/New_Patient__c/${patientId}/view`;
     }
 
-    getFollowUpUrl(patientId) {
-        const followUpId = this.getFollowUpId(patientId);
-        return followUpId ? { url: `/lightning/r/Patient_Follow_Up__c/${followUpId}/view`, label: 'Follow Up' } : { url: '#', label: 'Follow Up' };
-    }
-    
     getFollowUpId(patientId) {
         try {
             const result = getFollowUpId({ patientId });
@@ -70,6 +70,25 @@ export default class PatientListLWC extends LightningElement {
         }
     }
 
+    getFollowUpUrl(patientId) {
+        try {
+          const followUpId = getFollowUpId({ patientId });
+          if (followUpId) {
+            return {
+              url: `/lightning/r/Patient_Follow_Up__c/${followUpId}/view?inContextOf=Patient__c/${patientId}`,
+              label: 'Follow Up'
+            };
+          }
+          // Handle case where no follow-up record is found
+          return { label: 'No Follow Up Available' };
+        } catch (error) {
+          // Handle errors during follow-up ID retrieval
+          console.error('Error fetching follow-up Id:', error);
+          return { label: 'Error: Follow Up Unavailable' };
+        }
+      }
+    
+
     handleSearchTermChange(event) {
         this.searchTerm = event.target.value;
 
@@ -78,5 +97,29 @@ export default class PatientListLWC extends LightningElement {
             this.patients = this.mapDataForDisplay(this.fullPatientList);
         }
     }
-}
 
+    handleSearch(){
+        // If the search term is not empty, call the searchPatients wire method
+        if (this.searchTerm) {
+            searchPatients({ searchTerm: this.searchTerm })
+                .then(result => {
+                    this.patients = this.mapDataForDisplay(result);
+                })
+                .catch(error => {
+                    // Handle error
+                    console.error('Error searching patients:', error);
+                });
+        } else {
+            // If the search term is empty, show all patients
+            getAllPatientsList()
+                .then(result => {
+                    this.patients = this.mapDataForDisplay(result);
+                })
+                .catch(error => {
+                    // Handle error
+                    console.error('Error fetching all patients:', error);
+                });
+        }
+    }
+
+}

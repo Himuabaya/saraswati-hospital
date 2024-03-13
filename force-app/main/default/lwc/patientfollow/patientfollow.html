@@ -1,0 +1,19 @@
+<template>
+  <lightning-record-edit-form
+    object-api-name="Patient_Follow_Up__c"
+    form-factor="Large"
+    onsave={handleSave}
+    onsuccess={handleSuccess}
+  >
+    <lightning-input-field field-name="Patient__c" label="Patient" mode="readonly"></lightning-input-field>
+    <lightning-input-field field-name="Patient__c.Sex__c" label="Sex" mode="readonly"></lightning-input-field>
+    <lightning-input-field field-name="Patient__c.Email_ID__c" label="Email ID"  mode="readonly"></lightning-input-field>
+    <lightning-input-field field-name="Followup_Date__c" label="Follow Up Date"></lightning-input-field>
+    <lightning-input-field field-name="Ref_By__c" label="Referred By"></lightning-input-field>
+    <lightning-input-field field-name="Consultant__c" label="Consultant"></lightning-input-field>
+    <lightning-input-field field-name="Name" label="Weight (kg)"></lightning-input-field> 
+    <lightning-input-field field-name="Urine_PC__c" label="Urine PC"></lightning-input-field>
+
+    <lightning-button label="Save" onclick={handleSave}></lightning-button>
+  </lightning-record-edit-form>
+</template>
