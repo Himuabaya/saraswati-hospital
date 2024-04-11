@@ -36,9 +36,7 @@
                             <td>{patient.Email_ID__c}</td>
                             <td>{patient.Mobile_No__c}</td>
                                 <td>
-                                  <a href={patient.followUpUrl.url} rel="noopener noreferrer">
-                                    {patient.followUpUrl.label}
-                                  </a>
+                                  <lightning-button label="Follow Up" onclick={navigateToFollowUp} data-id={patient.Id}></lightning-button>
                                 </td>
                         </tr>
                     </template>

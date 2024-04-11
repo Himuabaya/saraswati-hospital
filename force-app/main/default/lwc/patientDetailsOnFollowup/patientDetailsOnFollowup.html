@@ -1,0 +1,36 @@
+<template>
+    <lightning-card title="Patient Information" icon-name="standard:contact">
+        <div class={containerClass}>
+            <!-- Left Side -->
+            <div class={leftClass}>
+                <template if:true={patient}>
+                    <div>
+                        <p><b>Patient ID:</b> {patient.Name}</p>
+                        <p><b>Title:</b> {patient.Title__c}</p>
+                        <p><b>Name:</b> {patient.Name__c}</p>
+                    </div>
+                </template>
+            </div>
+            <!-- Middle -->
+            <div class={middleClass}>
+                <template if:true={patient}>
+                    <div>
+                        <p><b>Sex:</b> {patient.Sex__c}</p>
+                        <p><b>Email ID:</b> {patient.Email_ID__c}</p>
+                        <p><b>Mobile No:</b> {patient.Mobile_No__c}</p>
+                    </div>
+                </template>
+            </div>
+            <!-- Right Side -->
+            <div class={rightClass}>
+                <template if:true={patient}>
+                    <div>
+                        <p><b>Landline No:</b> {patient.Landline_No__c}</p>
+                        <p><b>Age:</b> {patient.Age__c}</p>
+                        <p><b>Address:</b> {patient.Address__c}</p>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </lightning-card>
+</template>

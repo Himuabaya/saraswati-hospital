@@ -1,9 +1,10 @@
 import { LightningElement, wire, api} from 'lwc';
 import searchPatients from '@salesforce/apex/PatientController.searchPatients';
 import getAllPatientsList from '@salesforce/apex/PatientController.getAllPatientsList';
-import getFollowUpId from '@salesforce/apex/PatientController.getFollowUpId';
+import navigateToFollowUp from  '@salesforce/apex/PatientController.navigateToFollowUp';
+import { NavigationMixin } from 'lightning/navigation';
 
-export default class PatientListLWC extends LightningElement {
+export default class PatientListLWC extends NavigationMixin(LightningElement)  {
     @api recordId;
     searchTerm = '';
    patients = [];
@@ -14,7 +15,6 @@ export default class PatientListLWC extends LightningElement {
         { label: 'Date', fieldName: 'Date__c', type: 'date' },
         { label: 'Email ID', fieldName: 'Email_ID__c', type: 'email' },
         { label: 'Mobile', fieldName: 'Mobile_No__c', type: 'phone' },
-        { label: 'Follow Up', fieldName: 'followUpUrl', type: 'url', typeAttributes: { label: 'Follow Up'} }
     ];
 
     @wire(getAllPatientsList)
@@ -50,7 +50,7 @@ export default class PatientListLWC extends LightningElement {
                 Date__c: formattedDate,
                 Email_ID__c: patient.Email_ID__c,
                 Mobile_No__c: patient.Mobile_No__c,
-                followUpUrl: this.getFollowUpUrl(patient.Id)
+                Id: patient.Id
             };
         });
     }
@@ -59,35 +59,31 @@ export default class PatientListLWC extends LightningElement {
      return `/lightning/r/New_Patient__c/${patientId}/view`;
     }
 
-    getFollowUpId(patientId) {
-        try {
-            const result = getFollowUpId({ patientId });
-            return result;
-        } catch (error) {
-            // Handle error
-            console.error('Error fetching follow-up Id:', error);
-            return null;
-        }
+    
+    navigateToFollowUp(event) {
+        const patientId = event.target.dataset.id;
+        navigateToFollowUp({ patientId: patientId })
+            .then(result => {
+                if (result) {
+                    this[NavigationMixin.Navigate]({
+                        type: 'standard__recordPage',
+                        attributes: {
+                            recordId: result,
+                            objectApiName: 'Patient_Follow_Up__c',
+                            actionName: 'view'
+                        }
+                    });
+                } else {
+                    // Handle case where no follow-up record is found
+                    console.error('No follow-up record found for the patient');
+                }
+            })
+            .catch(error => {
+                // Handle error
+                console.error('Error navigating to follow-up:', error);
+            });
     }
 
-    getFollowUpUrl(patientId) {
-        try {
-          const followUpId = getFollowUpId({ patientId });
-          if (followUpId) {
-            return {
-              url: `/lightning/r/Patient_Follow_Up__c/${followUpId}/view?inContextOf=Patient__c/${patientId}`,
-              label: 'Follow Up'
-            };
-          }
-          // Handle case where no follow-up record is found
-          return { label: 'No Follow Up Available' };
-        } catch (error) {
-          // Handle errors during follow-up ID retrieval
-          console.error('Error fetching follow-up Id:', error);
-          return { label: 'Error: Follow Up Unavailable' };
-        }
-      }
-    
 
     handleSearchTermChange(event) {
         this.searchTerm = event.target.value;

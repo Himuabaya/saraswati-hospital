@@ -1,0 +1,16 @@
+<template>
+    <lightning-card title="Follow Ups">
+        <lightning-input type="Date" data-formfield="toDate" label="Date"></lightning-input><br/><br/>
+        <lightning-button variant="brand" icon-name="utility:search" label="Search" onclick={searchFollowUpHandler}></lightning-button><br/>
+
+        <template if:true={showFollowUpTable}>
+            Total Count = {totalCount}<br/>
+            <lightning-datatable
+                key-field="Id"
+                data={receivedFollowupList}
+                draft-values={draftValues}
+                columns={columns}  > 
+            </lightning-datatable>
+        </template>
+    </lightning-card>
+</template>

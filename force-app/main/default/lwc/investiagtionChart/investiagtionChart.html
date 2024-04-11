@@ -1,0 +1,28 @@
+<template>
+    <lightning-card title="Investigation Chart">
+          
+        <div class="slds-var-m-around_medium">
+        
+            <lightning-input label="Name" data-formfield="name" type="text" ></lightning-input><br/>
+            <lightning-input label="Date" data-formfield="date" type="date" ></lightning-input><br/>
+            <lightning-input label="Height" data-formfield="height" type="number" ></lightning-input><br/>
+            <lightning-input label="Weight" data-formfield="weight" type="number" ></lightning-input><br/>
+            <lightning-input label="Hb" data-formfield="hb" type="text" ></lightning-input><br/>
+            <lightning-input label="Blood Urea" data-formfield="bloodurea" type="text" ></lightning-input><br/>
+            <lightning-input label="Sr. Creatine" data-formfield="srcreatine" type="text" ></lightning-input><br/>
+            <lightning-input label="Urine Protein" data-formfield="urineprotein" type="text" ></lightning-input><br/>
+            <lightning-input label="Urine PC" data-formfield="urinepc" type="text" ></lightning-input><br/>
+            <lightning-input label="Urine RBC" data-formfield="urinerbc" type="text" ></lightning-input><br/>
+            <lightning-input label="Urine PH" data-formfield="urineph" type="text" ></lightning-input><br/>
+            <lightning-input label="24 hr Urine Protein P:C ratio " data-formfield="24hrurineproteinp:cratio" type="text" ></lightning-input><br/>
+            <lightning-input label="Serum Cholesterol" data-formfield="serumcholesterol" type="text" ></lightning-input><br/>
+            <lightning-input label="Serium Albumin" data-formfield="seriumalbumin" type="text" ></lightning-input><br/>
+            <lightning-input label="Other 1" data-formfield="other1" type="text" ></lightning-input><br/>
+            <lightning-input label="Other 2" data-formfield="other2" type="text" ></lightning-input><br/>
+
+        
+                <lightning-button label="Save"  onclick={handleSave} variant="brand" ></lightning-button>
+          
+            </div>
+    </lightning-card>
+</template>

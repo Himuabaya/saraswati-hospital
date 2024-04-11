@@ -1,0 +1,32 @@
+<template>
+    <lightning-card title="OPD Collection">
+        <div class="slds-m-around_medium">
+            <lightning-input type="date" label="Search Date" value={searchDate} onchange={handleDateChange}></lightning-input>
+            <lightning-button label="Search" onclick={handleSearch}></lightning-button>
+        </div>
+
+        <template if:true={opdList}>
+            <table class="slds-table slds-table_bordered slds-table_cell-buffer">
+                <thead>
+                    <tr>
+                        <th>Patient Name</th>
+                        <th>Consultant Name</th>
+                        <th>Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <template for:each={opdList} for:item="opd">
+                        <tr key={opd.patientName}>
+                            <td>{opd.patientName}</td>
+                            <td>{opd.consultantName}</td>
+                            <td>
+                                <lightning-input type="number" value={opd.amount} onchange={handleUpdateAmount} data-recordid={opd.recordId}></lightning-input>
+                            </td>
+                        </tr>
+                    </template>
+                </tbody>
+            </table>
+            <p>Total Amount: {totalAmount}</p>
+        </template>
+    </lightning-card>
+</template>
